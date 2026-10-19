@@ -14,7 +14,9 @@ export async function pedirExcusaAGroq(
         { role: "user", content: prompt.user },
       ],
       temperature: 1,
-      max_tokens: 200,
+      max_tokens: 1200,
+      // gpt-oss es un modelo de razonamiento: sin esto quema el budget pensando
+      reasoning_effort: "low",
       stream: true,
     }),
   });
