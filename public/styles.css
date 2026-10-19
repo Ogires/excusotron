@@ -1,0 +1,45 @@
+:root {
+  --fondo: #0d0f12; --panel: #161a20; --borde: #2a313c;
+  --texto: #e8e6e3; --ambar: #ffb000; --verde: #39d353;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; display: grid; place-items: center;
+  background: var(--fondo); color: var(--texto);
+  font-family: "Courier New", ui-monospace, monospace;
+}
+main { width: min(680px, 92vw); padding: 2rem 0; }
+h1 {
+  font-size: clamp(2rem, 6vw, 3.2rem); letter-spacing: .08em; margin: 0;
+  color: var(--ambar); text-shadow: 0 0 18px rgba(255, 176, 0, .35);
+}
+h1 span { font-size: .45em; vertical-align: super; color: var(--verde); }
+.sub { color: #8b949e; margin: .4rem 0 2rem; font-size: .9rem; }
+.panel { background: var(--panel); border: 1px solid var(--borde); border-radius: 12px; padding: 1.5rem; }
+.niveles {
+  border: 1px dashed var(--borde); border-radius: 8px; padding: .8rem 1rem;
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.niveles legend { padding: 0 .4rem; color: var(--verde); }
+.niveles label { display: flex; gap: .4rem; align-items: center; cursor: pointer; font-size: .9rem; }
+.niveles input { accent-color: var(--ambar); }
+#generar {
+  width: 100%; margin: 1.2rem 0; padding: 1rem; font: inherit; font-weight: bold;
+  letter-spacing: .12em; color: #14100a; background: var(--ambar); border: 0;
+  border-radius: 8px; cursor: pointer; box-shadow: 0 4px 24px rgba(255, 176, 0, .25);
+}
+#generar:hover { filter: brightness(1.08); }
+#generar:disabled { opacity: .6; cursor: wait; }
+.salida {
+  min-height: 5.5rem; padding: 1rem; border-radius: 8px; background: #0a0c0f;
+  border: 1px solid var(--borde); line-height: 1.6; white-space: pre-wrap;
+}
+.acciones { display: flex; gap: 1rem; align-items: center; margin-top: .8rem; flex-wrap: wrap; }
+#copiar {
+  font: inherit; background: transparent; color: var(--verde);
+  border: 1px solid var(--verde); border-radius: 6px; padding: .4rem .8rem; cursor: pointer;
+}
+#contador { color: #8b949e; font-size: .85rem; }
+.aviso { color: var(--ambar); font-size: .85rem; }
+footer { margin-top: 1.5rem; color: #666; font-size: .8rem; text-align: center; }
+footer a { color: var(--verde); }

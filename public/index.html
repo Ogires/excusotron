@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Excusotron 3000 — excusas épicas para no ir a trabajar</title>
+  <meta name="description" content="Generador experimental de excusas laborales con nivel de verosimilitud ajustable." />
+  <meta property="og:title" content="Excusotron 3000" />
+  <meta property="og:description" content="Genera tu excusa épica para no ir a trabajar." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>EXCUSOTRON <span>3000</span></h1>
+      <p class="sub">Unidad experimental de excusas laborales · Rev. 1987</p>
+    </header>
+    <section class="panel">
+      <fieldset class="niveles">
+        <legend>Nivel de verosimilitud</legend>
+        <label><input type="radio" name="nivel" value="1" /><span>Absurdo épico</span></label>
+        <label><input type="radio" name="nivel" value="2" checked /><span>Sci-fi plausible</span></label>
+        <label><input type="radio" name="nivel" value="3" /><span>Casi creíble</span></label>
+      </fieldset>
+      <button id="generar">⚙️ GENERAR EXCUSA</button>
+      <div id="salida" class="salida" aria-live="polite">Pulsa el botón y el Excusotron hará el resto.</div>
+      <div class="acciones">
+        <button id="copiar" hidden>Copiar</button>
+        <span id="contador"></span>
+        <span id="aviso" class="aviso"></span>
+      </div>
+    </section>
+    <footer>
+      <p>Hecho con un Cloudflare Worker, Groq y muy poco juicio. <a href="https://github.com/TU_USUARIO/excusotron">Código fuente</a>.</p>
+    </footer>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
