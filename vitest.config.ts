@@ -1,10 +1,14 @@
+// vitest.config.ts
 import { defineConfig } from "vitest/config";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 
 export default defineConfig({
+  plugins: [
+    cloudflareTest({
+      wrangler: { configPath: "./wrangler.jsonc" },
+    }),
+  ],
   test: {
     setupFiles: ["./tests/setup.ts"],
-    poolOptions: {
-      workers: { wrangler: { configPath: "./wrangler.jsonc" } },
-    },
   },
 });
