@@ -16,10 +16,10 @@ const CABECERAS_SSE = {
 };
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname === "/api/excusa" && request.method === "POST") {
-      return manejarExcusa(request, env);
+      return manejarExcusa(request, env, ctx);
     }
     if (url.pathname === "/api/stats" && request.method === "GET") {
       return manejarStats(env);
@@ -33,7 +33,7 @@ async function manejarStats(env: Env): Promise<Response> {
   return Response.json({ total });
 }
 
-async function manejarExcusa(request: Request, env: Env): Promise<Response> {
+async function manejarExcusa(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const ip = request.headers.get("cf-connecting-ip") ?? "0.0.0.0";
   const rl = await checkRateLimit(env.KV, ip);
   if (!rl.allowed) {
@@ -51,7 +51,8 @@ async function manejarExcusa(request: Request, env: Env): Promise<Response> {
     return Response.json({ error: "nivel debe ser 1, 2 o 3" }, { status: 400 });
   }
 
-  void incrementarContador(env);
+  // waitUntil garantiza que el KV write sobreviva al cierre del stream de la respuesta
+  ctx.waitUntil(incrementarContador(env));
 
   let upstream: Response;
   try {

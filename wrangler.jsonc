@@ -3,6 +3,6 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
   "assets": { "directory": "./public" },
-  "kv_namespaces": [{ "binding": "KV", "id": "RELLENA_EN_TASK_10" }],
+  "kv_namespaces": [{ "binding": "KV", "id": "87a49cccc69e4076a5bcda74528d3c92" }],
   "vars": { "GROQ_MODEL": "llama-3.3-70b-versatile" }
 }
