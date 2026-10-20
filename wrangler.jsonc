@@ -3,6 +3,8 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
   "assets": { "directory": "./public" },
+  "routes": [{ "pattern": "excusotron.webninja.fyi", "custom_domain": true }],
+  "workers_dev": true,
   "kv_namespaces": [{ "binding": "KV", "id": "87a49cccc69e4076a5bcda74528d3c92" }],
   "vars": { "GROQ_MODEL": "openai/gpt-oss-120b" }
 }

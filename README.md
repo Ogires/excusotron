@@ -4,6 +4,8 @@
 
 Generador de excusas épicas para no ir a trabajar, con streaming palabra a palabra y coste de producción: 0 €.
 
+**▶ Demo en vivo: <https://excusotron.webninja.fyi>**
+
 <p align="center"><img src="docs/demo.gif" alt="Demo del Excusotron"/></p>
 
 ## ¿Qué es?
@@ -64,7 +66,7 @@ Resumen rápido con wrangler:
 npx wrangler login
 npx wrangler kv namespace create KV     # pega el id devuelto en wrangler.jsonc
 npx wrangler secret put GROQ_API_KEY    # key de console.groq.com/keys
-npm run deploy                          # https://excusotron.<subdominio>.workers.dev
+npm run deploy                          # https://excusotron.webninja.fyi
 ```
 
 La guía completa (CI/CD con GitHub Actions, secrets, checklist de producción) está en [`docs/plans/2026-10-19-excusotron-mv1.md`](docs/plans/2026-10-19-excusotron-mv1.md).
