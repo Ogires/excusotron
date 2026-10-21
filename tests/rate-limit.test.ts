@@ -1,32 +1,30 @@
 // tests/rate-limit.test.ts
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { env } from "cloudflare:test";
 import { checkRateLimit } from "../src/rate-limit";
 
-beforeEach(async () => {
-  await env.KV.delete("rl:1.2.3.4");
-  await env.KV.delete("rl:5.6.7.8");
-});
+// t = 100 s exactos dentro de una ventana de 60 s → minuto 1, segundo 40
+const T = 100_000;
 
-describe("checkRateLimit", () => {
-  it("permite las primeras 10 llamadas y bloquea la 11", async () => {
-    for (let i = 0; i < 10; i++) {
-      const r = await checkRateLimit(env.KV, "1.2.3.4");
-      expect(r.allowed).toBe(true);
+describe("checkRateLimit (ventana fija)", () => {
+  it("permite hasta el límite y bloquea con el tiempo real que queda", async () => {
+    for (let i = 0; i < 3; i++) {
+      expect((await checkRateLimit(env.KV, "1.1.1.1", 3, 60, T)).allowed).toBe(true);
     }
-    const bloqueada = await checkRateLimit(env.KV, "1.2.3.4");
-    expect(bloqueada.allowed).toBe(false);
-    expect(bloqueada.retryAfter).toBe(60);
+    expect(await checkRateLimit(env.KV, "1.1.1.1", 3, 60, T + 5_000)).toEqual({
+      allowed: false,
+      remaining: 0,
+      retryAfter: 15,
+    });
   });
 
-  it("las IPs son independientes", async () => {
-    expect((await checkRateLimit(env.KV, "1.2.3.4", 1)).allowed).toBe(true);
-    expect((await checkRateLimit(env.KV, "1.2.3.4", 1)).allowed).toBe(false);
-    expect((await checkRateLimit(env.KV, "5.6.7.8", 1)).allowed).toBe(true);
+  it("la ventana siguiente empieza de cero aunque el tráfico no pare", async () => {
+    for (let i = 0; i < 3; i++) await checkRateLimit(env.KV, "2.2.2.2", 3, 60, T);
+    expect((await checkRateLimit(env.KV, "2.2.2.2", 3, 60, T + 20_000)).allowed).toBe(true);
   });
 
-  it("informa del remaining", async () => {
-    const r = await checkRateLimit(env.KV, "1.2.3.4");
-    expect(r.remaining).toBe(9);
+  it("cada IP tiene su propio contador", async () => {
+    for (let i = 0; i < 3; i++) await checkRateLimit(env.KV, "3.3.3.3", 3, 60, T);
+    expect((await checkRateLimit(env.KV, "4.4.4.4", 3, 60, T)).allowed).toBe(true);
   });
 });
