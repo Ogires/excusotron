@@ -6,5 +6,6 @@
   "routes": [{ "pattern": "excusotron.webninja.fyi", "custom_domain": true }],
   "workers_dev": true,
   "kv_namespaces": [{ "binding": "KV", "id": "87a49cccc69e4076a5bcda74528d3c92" }],
+  "ratelimits": [{ "name": "RL", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } }],
   "vars": { "GROQ_MODEL": "openai/gpt-oss-120b" }
 }

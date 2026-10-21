@@ -5,6 +5,7 @@ import { excusaDeReserva } from "./pool";
 
 type Env = {
   KV: KVNamespace;
+  RL: RateLimit;
   GROQ_API_KEY: string;
   GROQ_MODEL: string;
 };
@@ -35,7 +36,7 @@ async function manejarStats(env: Env): Promise<Response> {
 
 async function manejarExcusa(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const ip = request.headers.get("cf-connecting-ip") ?? "0.0.0.0";
-  const rl = await checkRateLimit(env.KV, ip);
+  const rl = await checkRateLimit(env.RL, ip);
   if (!rl.allowed) {
     return Response.json({ error: "huelga", segundos: rl.retryAfter }, { status: 429 });
   }
